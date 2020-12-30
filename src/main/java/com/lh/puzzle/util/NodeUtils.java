@@ -1,7 +1,10 @@
 package com.lh.puzzle.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lh.puzzle.model.NodeTmp;
+
+import java.io.*;
 
 /**
  * @auther: loneyfall
@@ -30,5 +33,38 @@ public class NodeUtils {
         tmp.add(5, initNodeTmpByJson(json.getJSONObject("6")));
 
         return tmp;
+    }
+
+    /**
+     * 通过json文件生成节点模版数据
+     *
+     * @param path
+     * @return
+     */
+    public static NodeTmp initNodeTmpByJsonFile(String path) {
+        JSONObject json1 = JSON.parseObject(readJsonFile(path));
+        return NodeUtils.initNodeTmpByJson(json1);
+    }
+
+    //读取json文件
+    private static String readJsonFile(String fileName) {
+        String jsonStr = "";
+        try {
+            File jsonFile = new File(fileName);
+            FileReader fileReader = new FileReader(jsonFile);
+            Reader reader = new InputStreamReader(new FileInputStream(jsonFile), "utf-8");
+            int ch = 0;
+            StringBuffer sb = new StringBuffer();
+            while ((ch = reader.read()) != -1) {
+                sb.append((char) ch);
+            }
+            fileReader.close();
+            reader.close();
+            jsonStr = sb.toString();
+            return jsonStr;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

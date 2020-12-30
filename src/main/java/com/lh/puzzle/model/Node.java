@@ -1,5 +1,6 @@
 package com.lh.puzzle.model;
 
+import com.lh.puzzle.view.LinkAndWay;
 import org.apache.commons.lang3.ObjectUtils;
 
 /**
@@ -54,6 +55,29 @@ public class Node {
         l3 = l2.getNext().getNext();
     }
 
+    public LinkAndWay[] getNextWay(int rotate) {
+        if (count <= 0) {
+            return null;
+        }
+        LinkAndWay[] result = new LinkAndWay[count];
+        int index = 0;
+
+        Link start;
+        if (1 == rotate) {
+            start = l1;
+        } else if (2 == rotate) {
+            start = l2;
+        } else {
+            start = l3;
+        }
+        for (int i = 1; i <= 6; i++) {
+            if (start.linked()) {
+                result[index++] = new LinkAndWay(start, i);
+            }
+            start = start.getNext();
+        }
+        return result;
+    }
 
     /**
      * 旋转区块，从第一个节点开始
@@ -77,5 +101,9 @@ public class Node {
 
     public int getRotate() {
         return rotate;
+    }
+
+    public int getCount() {
+        return count;
     }
 }
