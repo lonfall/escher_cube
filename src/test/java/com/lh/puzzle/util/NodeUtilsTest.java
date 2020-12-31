@@ -59,4 +59,9 @@ public class NodeUtilsTest {
             System.out.println(pointer.next(i));
         }
     }
+
+    private void testMapAddAndClear() {
+        Map map = new Map();
+
+    }
 }

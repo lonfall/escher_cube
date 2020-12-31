@@ -39,6 +39,8 @@ public class Map {
                     }
                 }
             }
+        } else {
+            return false;
         }
         return true;
     }
@@ -73,6 +75,18 @@ public class Map {
         for (int i = 0; i < maps.length; i++) {
             for (int j = 0; j < maps[i].length; j++) {
                 maps[i][j] = false;
+            }
+        }
+    }
+
+    public void clear(Node node, Pointer pointer, int rotate) {
+        maps[pointer.getX()][pointer.getY()] = false;
+
+        LinkAndWay[] ways = node.getNextWay(rotate);
+        if (ways != null) {
+            for (int i = 0; i < ways.length; i++) {
+                Pointer next_pointer = pointer.next(ways[i].getWay());
+                clear(ways[i].getLink().getNode(), next_pointer, rotate);
             }
         }
     }
